@@ -76,14 +76,15 @@ body {
   padding: 1em;
 }
 
-.Question h2 {
+.Question p {
   margin-bottom: .4em;
 }
 
 .Game button {
   margin-right: 2em;
   padding: .5em 1em;
-  font-size: 1rem;
+  font-size: .75rem;
+  font-family: inherit;
   border-radius: 10px;
   border: 1px solid black;
 }
@@ -92,9 +93,13 @@ body {
   background-color: transparent;
 }
 
+.answers {
+  display: flex;
+  justify-content: center;
+}
+
 .check-btn {
   background-color: #4D5B9E;
   color: #F5F7FB;
-
 }
 
