@@ -9,6 +9,8 @@ body {
   height: 100vh;
 }
 
+/* Intro screen */
+
 .Intro {
   display: flex;
   height: 100vh;
@@ -56,3 +58,43 @@ body {
   right: 0;
   top: 0;
 }
+
+/* Game screen */
+
+.Game {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+  padding: 2em;
+  box-sizing: border-box;
+}
+
+.Question {
+  border-bottom: 1px solid black;
+  padding: 1em;
+}
+
+.Question h2 {
+  margin-bottom: .4em;
+}
+
+.Game button {
+  margin-right: 2em;
+  padding: .5em 1em;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+.answers button {
+  background-color: transparent;
+}
+
+.check-btn {
+  background-color: #4D5B9E;
+  color: #F5F7FB;
+
+}
+

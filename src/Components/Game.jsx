@@ -1,5 +1,17 @@
+import Question from "./Question"
+
 export default function Game() {
+
   return (
-    <h1>The game will go here</h1>
+    <div className='Game'>
+      <Question />
+      <Question />
+      <Question />
+      <Question />
+      <Question />
+      <button className="check-btn">Check Answers</button>
+    </div>
+   
+
   )
 }
