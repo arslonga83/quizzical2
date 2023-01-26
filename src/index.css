@@ -1,0 +1,53 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  width: 100vw;
+  height: 100vh;
+}
+
+.Intro {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #293264;
+}
+
+.Intro h1 {
+  font-weight: 700;
+  font-size: 4rem;
+  font-family: 'karla', 'sans-serif';
+  margin-bottom: .1em;
+}
+
+.Intro button {
+  font-family: inherit;
+  font-size: 2rem;
+  font-weight: bold;
+  background-color: #4D5B9E;
+  color: #F5F7FB;
+  padding: .5em 1em;
+  border-radius: 10px;
+  border: none;
+  margin-top: .75em;
+}
+
+.blob-bottom, .blob-top {
+  position: absolute;
+  width: 15em;
+}
+
+.blob-bottom {
+  left: 0;
+  bottom: 0;
+}
+
+.blob-top {
+  right: 0;
+  top: 0;
+}
