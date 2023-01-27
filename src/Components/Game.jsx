@@ -51,7 +51,7 @@ console.log(questionsArray)
 
   return (
     <div className='Game'>
-      <Questions questionsArray={questionsArray}/>
+      <Questions questionsArray={questionsArray} setQuestionsArray={setQuestionsArray}/>
       <button className="check-btn">Check Answers</button>
     </div>
    

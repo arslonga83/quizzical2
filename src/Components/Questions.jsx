@@ -11,19 +11,41 @@ export default function Questions(props) {
 // }
 
 function handleClick(e) {
-  console.log(`Question: ${e.target.parentNode.id}, 'Answer: ${e.target.id}`)
+ 
+  props.setQuestionsArray(prev => {
+   let newArray = []
+  //  find the right question
+   prev.map(question => {
+    if (question.id === e.target.parentNode.id) {
+      // update selected one those answers
+      question.answers.map(answer => {
+        if (answer.id === e.target.id) {
+          answer.selected = true
+        } else {
+          answer.selected = false
+        }
+      })
+      // push the updated question
+      newArray.push(question)
+    } else {
+      // push the other questions unchanged
+      newArray.push(question)
+    }
+   })
+   return newArray
+})
 }
 
+// button styles to to use with selected prop
 const clearStyle = {
   backgroundColor: 'transparent'
 }
-
 const selectedStyle = {
   backgroundColor: '#D6DBF5'
 }
 
 
-if (props.questionsArray.length > 0) {
+// return one question card for each item in the array
   return (
     props.questionsArray.map(question => {
       
@@ -44,8 +66,6 @@ if (props.questionsArray.length > 0) {
           </div>
         </div>
       )
-
     })
     )
   }
-}
