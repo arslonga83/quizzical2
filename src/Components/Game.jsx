@@ -49,10 +49,25 @@ const [questionsArray, setQuestionsArray] = React.useState([])
 
 console.log(questionsArray)
 
+function checkAnswers() {
+  questionsArray.map(question => {
+    question.answers.map(answer => {
+      if (answer.selected && answer.correct) {
+        console.log('Correct!') 
+      }
+      if (answer.selected && !answer.correct) {
+        console.log('Wrong answer')
+      }
+    })
+  })
+}
+
+
+
   return (
     <div className='Game'>
       <Questions questionsArray={questionsArray} setQuestionsArray={setQuestionsArray}/>
-      <button className="check-btn">Check Answers</button>
+      <button className="check-btn" onClick={checkAnswers}>Check Answers</button>
     </div>
    
 
