@@ -1,41 +1,45 @@
-// QUESTION do the answers need to be objects before i display them? could have props like id, key, selected, correct...
-
-
 import React from 'react'
-import {decode} from 'html-entities' //decodes html entities in api data
-import { nanoid } from 'nanoid'
 
 export default function Questions(props) {
 
   // helper function to mix up the right and wrong answers
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
+//   function shuffleArray(array) {
+//     for (let i = array.length - 1; i > 0; i--) {
+//         const j = Math.floor(Math.random() * (i + 1));
+//         [array[i], array[j]] = [array[j], array[i]];
+//     }
+// }
+
+function handleClick(e) {
+  console.log(`Question: ${e.target.parentNode.id}, 'Answer: ${e.target.id}`)
 }
 
-function select(event) {
-  console.log(event.target.id)
+const clearStyle = {
+  backgroundColor: 'transparent'
+}
+
+const selectedStyle = {
+  backgroundColor: '#D6DBF5'
 }
 
 
-if (props.questionsData.length > 0) {
+if (props.questionsArray.length > 0) {
   return (
-    props.questionsData.map((question, index) => {
+    props.questionsArray.map(question => {
       
-      // put all answers in one array and shuffle them
-      let answers = []
-      question.incorrect_answers.map(answer => answers.push(decode(answer)))
-      answers.push(decode(question.correct_answer))
-      shuffleArray(answers)
-
       return (
-        <div className="Question" key={index}>
-          <p>{decode(question.question)}</p>
-          <div className="answers">
-            {answers.map(answer => {
-              return <button id={nanoid()} key={nanoid()} onClick={select}>{answer}</button>
+        <div className="Question" key={question.id}>
+          <p>{question.question}</p>
+          <div className="answers" id={question.id}>
+            {question.answers.map(answer => {
+              return <button 
+                        id={answer.id}
+                        key={answer.id}
+                        style={answer.selected ? selectedStyle : clearStyle}
+                        onClick={handleClick}
+                        >
+                        {answer.answer}
+                      </button>
             })}
           </div>
         </div>
