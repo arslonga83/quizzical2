@@ -1,4 +1,9 @@
+// QUESTION do the answers need to be objects before i display them? could have props like id, key, selected, correct...
+
+
+import React from 'react'
 import {decode} from 'html-entities' //decodes html entities in api data
+import { nanoid } from 'nanoid'
 
 export default function Questions(props) {
 
@@ -10,6 +15,11 @@ export default function Questions(props) {
     }
 }
 
+function select(event) {
+  console.log(event.target.id)
+}
+
+
 if (props.questionsData.length > 0) {
   return (
     props.questionsData.map((question, index) => {
@@ -20,15 +30,13 @@ if (props.questionsData.length > 0) {
       answers.push(decode(question.correct_answer))
       shuffleArray(answers)
 
-
       return (
         <div className="Question" key={index}>
           <p>{decode(question.question)}</p>
           <div className="answers">
-            <button>{answers[0]}</button>
-            <button>{answers[1]}</button>
-            <button>{answers[2]}</button>
-            <button>{answers[3]}</button>
+            {answers.map(answer => {
+              return <button id={nanoid()} key={nanoid()} onClick={select}>{answer}</button>
+            })}
           </div>
         </div>
       )
