@@ -50,7 +50,6 @@ const wrongAnswerStyle = {
           <p>{question.question}</p>
           <div className="answers" id={question.id}>
             {question.answers.map(answer => {
-              console.log(answer.result)
               return <button 
                         id={answer.id}
                         key={answer.id}

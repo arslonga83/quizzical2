@@ -65,9 +65,6 @@ function shuffleArray(array) {
           })
       }, [gameCount])
         
-
-console.log(questionsArray)
-
 function checkAnswers() {
   setAnswered(true)
   setQuestionsArray(prev => {
