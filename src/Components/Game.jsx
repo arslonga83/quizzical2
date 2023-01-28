@@ -6,6 +6,7 @@ import {decode} from 'html-entities'
 export default function Game() {
 
 const [questionsArray, setQuestionsArray] = React.useState([])
+const [answered, setAnswered] = React.useState(false)
 
   React.useEffect(() => {
     fetch('https://opentdb.com/api.php?amount=5&type=multiple')
@@ -53,20 +54,8 @@ const [questionsArray, setQuestionsArray] = React.useState([])
 
 console.log(questionsArray)
 
-// function checkAnswers() {
-//   questionsArray.map(question => {
-//     question.answers.map(answer => {
-//       if (answer.selected && answer.correct) {
-//         console.log('Correct!') 
-//       }
-//       if (answer.selected && !answer.correct) {
-//         console.log('Wrong answer')
-//       }
-//     })
-//   })
-// }
-
 function checkAnswers() {
+  setAnswered(true)
   setQuestionsArray(prev => {
     let newArray = []
    //  map over all the questions
@@ -75,11 +64,11 @@ function checkAnswers() {
        // add results to the array
        question.answers.map(answer => {
         if (answer.selected && answer.correct) {
-          answer.result = 'Correct!' 
+          answer.result = 'correct' 
           answer.selected = false
         }
         if (answer.selected && !answer.correct) {
-          answer.result = 'Wrong answer'
+          answer.result = 'wrong'
           answer.selected = false
         } 
        })
@@ -98,7 +87,9 @@ function checkAnswers() {
   return (
     <div className='Game'>
       <Questions questionsArray={questionsArray} setQuestionsArray={setQuestionsArray}/>
-      <button className="check-btn" onClick={checkAnswers}>Check Answers</button>
+      {!answered ? 
+      <button className="check-btn" onClick={checkAnswers}>Check Answers</button> :
+      <button className="replay-btn">Play Again</button>}
     </div>
    
 

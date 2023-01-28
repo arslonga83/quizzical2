@@ -43,7 +43,12 @@ const clearStyle = {
 const selectedStyle = {
   backgroundColor: '#D6DBF5'
 }
-
+const rightAnswerStyle = {
+  backgroundColor: '#94D7A2'
+}
+const wrongAnswerStyle = {
+  backgroundColor: '#F8BCBC'
+}
 
 // return one question card for each item in the array
   return (
@@ -54,10 +59,16 @@ const selectedStyle = {
           <p>{question.question}</p>
           <div className="answers" id={question.id}>
             {question.answers.map(answer => {
+              console.log(answer.result)
               return <button 
                         id={answer.id}
                         key={answer.id}
-                        style={answer.selected ? selectedStyle : clearStyle}
+                        style={answer.selected ? 
+                              selectedStyle : 
+                              answer.result === 'correct' ? rightAnswerStyle :
+                              answer.result === 'wrong' ? 
+                              wrongAnswerStyle :
+                              clearStyle}
                         onClick={handleClick}
                         >
                         {answer.answer}

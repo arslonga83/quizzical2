@@ -98,7 +98,7 @@ body {
   justify-content: center;
 }
 
-.check-btn {
+.check-btn, .replay-btn {
   background-color: #4D5B9E;
   color: #F5F7FB;
 }
