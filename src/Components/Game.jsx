@@ -20,25 +20,29 @@ const [questionsArray, setQuestionsArray] = React.useState([])
                     answer: decode(result.correct_answer),
                     correct: true,
                     selected: false,
-                    id: nanoid()
+                    id: nanoid(),
+                    result: ''
                   },
                   {
                     answer: decode(result.incorrect_answers[0]),
                     correct: false,
                     selected: false, 
-                    id: nanoid()
+                    id: nanoid(),
+                    result: ''
                   },
                   {
                     answer: decode(result.incorrect_answers[1]),
                     correct: false,
                     selected: false,
-                    id: nanoid()
+                    id: nanoid(),
+                    result: ''
                   },
                   {
                     answer: decode(result.incorrect_answers[2]),
                     correct: false,
                     selected: false,
-                    id: nanoid()
+                    id: nanoid(),
+                    result: ''
                   }
                 ]
               }
@@ -49,18 +53,45 @@ const [questionsArray, setQuestionsArray] = React.useState([])
 
 console.log(questionsArray)
 
+// function checkAnswers() {
+//   questionsArray.map(question => {
+//     question.answers.map(answer => {
+//       if (answer.selected && answer.correct) {
+//         console.log('Correct!') 
+//       }
+//       if (answer.selected && !answer.correct) {
+//         console.log('Wrong answer')
+//       }
+//     })
+//   })
+// }
+
 function checkAnswers() {
-  questionsArray.map(question => {
-    question.answers.map(answer => {
-      if (answer.selected && answer.correct) {
-        console.log('Correct!') 
-      }
-      if (answer.selected && !answer.correct) {
-        console.log('Wrong answer')
-      }
+  setQuestionsArray(prev => {
+    let newArray = []
+   //  map over all the questions
+    prev.map(question => {
+     
+       // add results to the array
+       question.answers.map(answer => {
+        if (answer.selected && answer.correct) {
+          answer.result = 'Correct!' 
+          answer.selected = false
+        }
+        if (answer.selected && !answer.correct) {
+          answer.result = 'Wrong answer'
+          answer.selected = false
+        } 
+       })
+       // push the updated question
+       newArray.push(question)
+     } )
+     return newArray
     })
-  })
-}
+    
+  }
+  
+
 
 
 
