@@ -1,39 +1,75 @@
-import {decode} from 'html-entities' //decodes html entities in api data
+import React from 'react'
 
 export default function Questions(props) {
 
-  // helper function to mix up the right and wrong answers
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+function handleClick(e) {
+  props.setQuestionsArray(prev => {
+   let newArray = []
+  //  find the right question
+   prev.map(question => {
+    if (question.id === e.target.parentNode.id) {
+      // update selected one those answers
+      question.answers.map(answer => {
+        if (answer.id === e.target.id) {
+          answer.selected = true
+        } else {
+          answer.selected = false
+        }
+      })
+      // push the updated question
+      newArray.push(question)
+    } else {
+      // push the other questions unchanged
+      newArray.push(question)
     }
+   })
+   return newArray
+})
 }
 
-if (props.questionsData.length > 0) {
+// button styles to to use with selected prop
+const clearStyle = {
+  backgroundColor: 'transparent'
+}
+const selectedStyle = {
+  backgroundColor: '#D6DBF5'
+}
+const rightAnswerStyle = {
+  backgroundColor: '#94D7A2',
+  color: '#293264'
+}
+const wrongAnswerStyle = {
+  backgroundColor: '#F8BCBC'
+}
+
+// return one question card for each item in the array
   return (
-    props.questionsData.map((question, index) => {
-      
-      // put all answers in one array and shuffle them
-      let answers = []
-      question.incorrect_answers.map(answer => answers.push(decode(answer)))
-      answers.push(decode(question.correct_answer))
-      shuffleArray(answers)
-
-
+    props.questionsArray.map(question => {
       return (
-        <div className="Question" key={index}>
-          <p>{decode(question.question)}</p>
-          <div className="answers">
-            <button>{answers[0]}</button>
-            <button>{answers[1]}</button>
-            <button>{answers[2]}</button>
-            <button>{answers[3]}</button>
+        <div className="Question" key={question.id}>
+          <p>{question.question}</p>
+          <div className="answers" id={question.id}>
+            {question.answers.map(answer => {
+              console.log(answer.result)
+              return <button 
+                        id={answer.id}
+                        key={answer.id}
+                        style={answer.selected ? 
+                              selectedStyle : 
+                              answer.correct && props.answered ? 
+                              rightAnswerStyle :
+                              answer.result === 'wrong' ? 
+                              wrongAnswerStyle :
+                              clearStyle}
+                        onClick={handleClick}
+                        disabled={props.answered}
+                        >
+                        {answer.answer}
+                      </button>
+            })}
           </div>
         </div>
       )
-
     })
     )
   }
-}
