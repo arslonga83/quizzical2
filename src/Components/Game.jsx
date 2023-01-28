@@ -7,6 +7,7 @@ export default function Game() {
 
 const [questionsArray, setQuestionsArray] = React.useState([])
 const [answered, setAnswered] = React.useState(false)
+const [gameCount, setGameCount] = React.useState(0)
 
   React.useEffect(() => {
     fetch('https://opentdb.com/api.php?amount=5&type=multiple')
@@ -49,7 +50,7 @@ const [answered, setAnswered] = React.useState(false)
               }
             }))
           })
-      }, [])
+      }, [gameCount])
         
 
 console.log(questionsArray)
@@ -80,7 +81,10 @@ function checkAnswers() {
     
   }
   
-
+function replay() {
+  setGameCount(prev => prev + 1)
+  setAnswered(false)
+}
 
 
 
@@ -89,7 +93,7 @@ function checkAnswers() {
       <Questions questionsArray={questionsArray} setQuestionsArray={setQuestionsArray}/>
       {!answered ? 
       <button className="check-btn" onClick={checkAnswers}>Check Answers</button> :
-      <button className="replay-btn">Play Again</button>}
+      <button className="replay-btn" onClick={replay}>Play Again</button>}
     </div>
    
 
