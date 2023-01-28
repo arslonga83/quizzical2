@@ -2,16 +2,7 @@ import React from 'react'
 
 export default function Questions(props) {
 
-  // helper function to mix up the right and wrong answers
-//   function shuffleArray(array) {
-//     for (let i = array.length - 1; i > 0; i--) {
-//         const j = Math.floor(Math.random() * (i + 1));
-//         [array[i], array[j]] = [array[j], array[i]];
-//     }
-// }
-
 function handleClick(e) {
- 
   props.setQuestionsArray(prev => {
    let newArray = []
   //  find the right question
@@ -44,7 +35,8 @@ const selectedStyle = {
   backgroundColor: '#D6DBF5'
 }
 const rightAnswerStyle = {
-  backgroundColor: '#94D7A2'
+  backgroundColor: '#94D7A2',
+  color: '#293264'
 }
 const wrongAnswerStyle = {
   backgroundColor: '#F8BCBC'
@@ -53,7 +45,6 @@ const wrongAnswerStyle = {
 // return one question card for each item in the array
   return (
     props.questionsArray.map(question => {
-      
       return (
         <div className="Question" key={question.id}>
           <p>{question.question}</p>
@@ -65,11 +56,13 @@ const wrongAnswerStyle = {
                         key={answer.id}
                         style={answer.selected ? 
                               selectedStyle : 
-                              answer.result === 'correct' ? rightAnswerStyle :
+                              answer.correct && props.answered ? 
+                              rightAnswerStyle :
                               answer.result === 'wrong' ? 
                               wrongAnswerStyle :
                               clearStyle}
                         onClick={handleClick}
+                        disabled={props.answered}
                         >
                         {answer.answer}
                       </button>

@@ -8,13 +8,24 @@ export default function Game() {
 const [questionsArray, setQuestionsArray] = React.useState([])
 const [answered, setAnswered] = React.useState(false)
 const [gameCount, setGameCount] = React.useState(0)
+const [rightCount, setRightCount] = React.useState(0)
 
+
+// helper function to mix up the right and wrong answers
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// make API call and store data in questions array
   React.useEffect(() => {
     fetch('https://opentdb.com/api.php?amount=5&type=multiple')
           .then(res => res.json())
           .then(data => {
             setQuestionsArray(data.results.map(result => {
-              return {
+              let obj = {
                 question: decode(result.question),
                 id: nanoid(),
                 answers: [
@@ -48,6 +59,8 @@ const [gameCount, setGameCount] = React.useState(0)
                   }
                 ]
               }
+              shuffleArray(obj.answers)
+              return obj
             }))
           })
       }, [gameCount])
@@ -67,6 +80,7 @@ function checkAnswers() {
         if (answer.selected && answer.correct) {
           answer.result = 'correct' 
           answer.selected = false
+          setRightCount(prev => prev + 1)
         }
         if (answer.selected && !answer.correct) {
           answer.result = 'wrong'
@@ -82,20 +96,18 @@ function checkAnswers() {
   }
   
 function replay() {
-  setGameCount(prev => prev + 1)
-  setAnswered(false)
+  setGameCount(prev => prev + 1) //triggers new API call
+  setAnswered(false) //enables buttons
+  setRightCount(0)
 }
-
-
 
   return (
     <div className='Game'>
-      <Questions questionsArray={questionsArray} setQuestionsArray={setQuestionsArray}/>
+       <Questions questionsArray={questionsArray} setQuestionsArray={setQuestionsArray} answered={answered} />
+      {answered && <span>You got {rightCount}/5 correct!</span>}
       {!answered ? 
       <button className="check-btn" onClick={checkAnswers}>Check Answers</button> :
       <button className="replay-btn" onClick={replay}>Play Again</button>}
     </div>
-   
-
   ) 
 }
